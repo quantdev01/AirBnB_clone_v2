@@ -1,7 +1,7 @@
 -- db creation
 
 CREATE DATABASE IF NOT EXISTS hbnb_dev_db;
-CREATE DATABASE IF NOT EXISTS performance_schema; 
+-- CREATE DATABASE IF NOT EXISTS performance_schema; 
 CREATE USER IF NOT EXISTS 'hbnb_dev'@'localhost' IDENTIFIED BY 'Hbnb_dev_pwd@24';
 USE hbnb_dev_db;
 -- GRANT CREATE, ALTER, DROP, INSERT, UPDATE, DELETE, SELECT, REFERENCES, RELOAD ON hbnb_dev_db TO 'hbnb_dev'@'localhost';
