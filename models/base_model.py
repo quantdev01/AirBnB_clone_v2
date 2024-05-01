@@ -5,6 +5,8 @@ from datetime import datetime
 import sqlalchemy
 
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import Column, String, Integer, ForeignKey
+from sqlalchemy.orm import relationship
 
 Base = declarative_base()
 
@@ -57,4 +59,3 @@ class BaseModel:
     def delete(self):
         """call delete"""
         # from models.engine.file_storage import FileStorage
-        del self
