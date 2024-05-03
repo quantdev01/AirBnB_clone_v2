@@ -4,8 +4,8 @@ import uuid
 from datetime import datetime
 import sqlalchemy
 
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, String, Integer, ForeignKey
+from sqlalchemy.orm import declarative_base
+from sqlalchemy import Column, String, Integer, ForeignKey, DateTime
 from sqlalchemy.orm import relationship
 
 Base = declarative_base()
@@ -13,15 +13,18 @@ Base = declarative_base()
 
 class BaseModel:
     """A base class for all hbnb models"""
+    id = Column(String(60), primary_key=True, nullable=False)
+    created_at = Column(DateTime, nullable=False, default=datetime.utcnow()) 
+    updated_at = Column(DateTime, nullable=False, default=datetime.utcnow()) 
+
     def __init__(self, *args, **kwargs):
         """Instatntiates a new model"""
         if not kwargs:
             from models import storage
-            from sqlalchemy import Column, String, Integer
+            self.id = str(uuid.uuid4())
+            self.created_at = datetime.now()
+            self.updated_at = datetime.now()
 
-            self.id = Column(String(60), primary_key=True, nullable=False)
-            self.created_at = Column(datetime.utcnow(), nullable=False) 
-            self.updated_at = Column(datetime.utcnow(), nullable=False) 
         else:
             kwargs['updated_at'] = datetime.strptime(kwargs['updated_at'],
                                                      '%Y-%m-%dT%H:%M:%S.%f')
@@ -51,11 +54,15 @@ class BaseModel:
         dictionary['created_at'] = self.created_at.isoformat()
         dictionary['updated_at'] = self.updated_at.isoformat()
 
-        #Remove '_sa_intance_state' 
+        # Remove '_sa_intance_state' 
         if '_sa_intance_state' in dictionary:
             dictionary.pop('_sa_intance_state')
         return dictionary
 
     def delete(self):
-        """call delete"""
-        # from models.engine.file_storage import FileStorage
+        """call delete to delete the current instance"""
+        from models import storage
+        # Delete from storage 
+        storage.delete(self)
+        
+
