@@ -6,10 +6,11 @@ from sqlalchemy.orm import relationship
 import os
 
 
-class State(BaseModel, Base):
+class State(BaseModel): # add Base
     """ State class """
-    # name = ""
-    __tablename__ = 'states'
+    name = ""
+    # __tablename__ = 'states'
+    """
     name = Column(String(128))
 
     if os.environ.get('HBNB_TYPE_STORAGE') == 'db':
@@ -17,10 +18,11 @@ class State(BaseModel, Base):
     else:
         @property
         def cities(self):
-            """ get the citi as attribute """
+            "" get the citi as attribute ""
             from models import storage, City
             cities = []
             for city in storage.all(City).values():
                 if city.state_id == self.id:
                     cities.append(city)
             return cities
+            """
