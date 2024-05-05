@@ -144,6 +144,31 @@ class HBNBCommand(cmd.Cmd):
         storage.save()
         print(new_instance.id)
 
+        # Parse parameters
+        """kwargs = {}
+        for param in args[1:]:
+            try:
+                key, value = param.split('=')
+                # Parse value based on syntax
+                if value.startswith('"') and value.endswith('"'):
+                    value = value[1:-1].replace('\\"', '"').replace('_', ' ')
+                elif '.' in value:
+                    value = float(value)
+                else:
+                    value = int(value)
+                kwargs[key] = value
+            except ValueError:
+                print(f"Skipping parameter {param}")
+
+        try:
+            # Create instance of class with parsed parameters
+            new_instance = HBNBCommand.classes[class_name](**kwargs)
+            print(new_instance.id)
+            storage.save()
+        except Exception as e:
+            print(f"Error creating instance: {e}")
+            """
+
     def help_create(self):
         """ Help information for the create method """
         print("Creates a class of any type")
@@ -338,3 +363,5 @@ class HBNBCommand(cmd.Cmd):
         print("Updates an object with new information")
         print("Usage: update <className> <id> <attName> <attVal>\n")
 
+if __name__ == "__main__":
+    HBNBCommand().cmdloop()
