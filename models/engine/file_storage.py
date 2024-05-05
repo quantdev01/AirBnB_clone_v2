@@ -52,16 +52,17 @@ class FileStorage:
     def delete(self, obj=None):
         """ Delete an objects """
         try:
-            del self.__objects["{}.{}".format(type(obj).__name__, obj.id)]
+            if obj is None:
+                return
+
+            key =  "{}.{}".format(obj.__class__.__name__, obj.id)
+
+            if key in FileStorage.__objects:
+                del self.__objects["{}.{}".format(type(obj).__name__, obj.id)]
+
         except Exception:
             pass
-        if obj is None:
-            return
-
-        # key =  "{}.{}".format(obj.__class__.__name__, obj.id)
-
-        # if key in FileStorage.__objects:
-         #   del FileStorage.__objects[key]
+    #   del FileStorage.__objects[key]
 
 # base = FileStorage()
 # base.reload()
