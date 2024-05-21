@@ -30,7 +30,9 @@ class DBStorage:
         if cls:
             results = self.__session.query(eval(cls)).all()
         else:
-            results = self.__session.query(User, State, City, Amenyity, Place, Review).all()
+            # results = self.__session.query(User, State, City, Amenyity, Place, Review).all()
+            results= self.__session.query(State).all()
+            results.extend(self.__session.query(User).all())
         return {f"{type(obj).__name__}.{obj.id}": obj for obj in results}
 
     def new(self, obj):
